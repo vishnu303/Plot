@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "855297320127",
+    "project_id": "plot-pixgrid",
+    "storage_bucket": "plot-pixgrid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855297320127:android:91e0c28224a207a935920a",
+        "android_client_info": {
+          "package_name": "com.pixgrid.plot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855297320127-v2f71qdgtph08jcfkacvak4dm90r0083.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtn0DNOx8PgB-yKt6iq3CLPt751S28GiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855297320127-v2f71qdgtph08jcfkacvak4dm90r0083.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855297320127-oqdb93iqe63t53e4rv991e7koec6fb79.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pixgrid.plot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
