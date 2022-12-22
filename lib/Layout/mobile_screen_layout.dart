@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MobileLayout extends StatefulWidget {
@@ -8,12 +9,13 @@ class MobileLayout extends StatefulWidget {
 }
 
 class _MobileLayoutState extends State<MobileLayout> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
           child: Text(
-        'mobile',
+        'mobile ${_auth.currentUser!.uid}',
         style: TextStyle(color: Colors.black),
       )),
     );
