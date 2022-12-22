@@ -195,7 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: screenWidth * 0.25, vertical: 13),
                         child: const Text(
-                          'Sign in',
+                          'Sign Up',
                           style: TextStyle(fontSize: 16),
                         ),
                       )),

@@ -22,5 +22,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticationError(e.toString()));
       }
     });
+
+    on<SignInRequest>((event, emit) async {
+      emit(const UnAuthenticated());
+      try {
+        await AuthRepository().signIn(
+          email: event.email,
+          password: event.password,
+        );
+      } catch (e) {
+        emit(AuthenticationError(e.toString()));
+      }
+    });
   }
 }

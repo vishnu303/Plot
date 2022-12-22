@@ -7,11 +7,16 @@ abstract class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SignInRequest extends AuthState {
-  const SignInRequest();
+class SignInRequest extends AuthEvent {
+  final String email;
+  final String password;
+  const SignInRequest({
+    required this.email,
+    required this.password,
+  });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [email, password];
 }
 
 class SignUpRequest extends AuthEvent {

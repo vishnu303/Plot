@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
 import 'package:plot/screens/signup_screen.dart';
 import 'package:plot/widgets/custom_textform.dart';
 
@@ -67,12 +69,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     customTextForm(
                       controller: _emailController,
                       label: 'Email',
+                      validate: (value) {
+                        if (value.isEmpty ||
+                            !RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
+                                .hasMatch(value)) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: screenHeight * 0.03),
                     customTextForm(
-                      controller: _passwordController,
-                      label: 'Password',
-                    ),
+                        controller: _passwordController,
+                        label: 'Password',
+                        validate: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the password';
+                          }
+                          return null;
+                        }),
                   ],
                 ),
               ),
@@ -83,7 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       shadowColor: Colors.grey,
                       elevation: 7,
                       backgroundColor: const Color(0xff086788)),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<AuthBloc>().add(SignInRequest(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        ));
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.25, vertical: 13),

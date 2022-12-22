@@ -41,4 +41,18 @@ class AuthRepository {
       throw e.toString();
     }
   }
+
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
