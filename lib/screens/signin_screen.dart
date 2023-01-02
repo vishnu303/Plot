@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           width: screenWidth,
           height: screenHeight,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 500 : 30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.25, vertical: 13),
+                        horizontal:
+                            kIsWeb ? screenWidth * 0.05 : screenWidth * 0.25,
+                        vertical: 13),
                     child: const Text(
                       'Sign In',
                       style: TextStyle(fontSize: 16),

@@ -7,8 +7,6 @@ import 'package:plot/Layout/responsive_layout.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
 import 'package:plot/screens/signin_screen.dart';
 
-import 'package:plot/screens/signup_screen.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
