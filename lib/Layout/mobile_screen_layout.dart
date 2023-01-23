@@ -31,33 +31,41 @@ class _MobileLayoutState extends State<MobileLayout> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white10,
-        elevation: 0,
-        title: const Text(
-          'Explore',
-          style: TextStyle(color: Colors.black),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white10,
+      //   elevation: 0,
+      //   title: const Text(
+      //     'Explore',
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {},
+      //         icon: const Icon(
+      //           Icons.notifications_none_rounded,
+      //           color: Colors.black,
+      //         )),
+      //   ],
+      // ),
+      body: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
+            HomeScreen(),
+            ChatScreen(),
+            CategoryScreen(),
+            MenuScreen(),
+          ],
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_none_rounded,
-                color: Colors.black,
-              )),
-        ],
-      ),
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          HomeScreen(),
-          ChatScreen(),
-          CategoryScreen(),
-          MenuScreen(),
-        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black,

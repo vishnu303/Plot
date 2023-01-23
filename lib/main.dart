@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/Layout/responsive_layout.dart';
 
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
+import 'package:plot/firebase_repo/auth_repo.dart';
 import 'package:plot/screens/signin_screen.dart';
 
 import 'firebase_options.dart';
@@ -24,36 +25,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Plot',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const ResponsiveLayout();
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('$snapshot.error'),
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Plot',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  return const ResponsiveLayout();
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('$snapshot.error'),
+                  );
+                }
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return const LoginScreen();
-          },
+              return const LoginScreen();
+            },
+          ),
         ),
       ),
     );

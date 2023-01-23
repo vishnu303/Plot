@@ -38,3 +38,10 @@ class SignUpRequest extends AuthEvent {
         image,
       ];
 }
+
+class GetUserDetails extends AuthEvent {
+  const GetUserDetails();
+
+  @override
+  List<Object> get props => [];
+}

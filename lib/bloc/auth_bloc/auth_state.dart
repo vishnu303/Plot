@@ -8,7 +8,8 @@ abstract class AuthState extends Equatable {
 }
 
 class Authenticated extends AuthState {
-  const Authenticated();
+  final UserModel? userdata;
+  const Authenticated({this.userdata});
 
   @override
   List<Object> get props => [];
@@ -28,3 +29,8 @@ class AuthenticationError extends AuthState {
   @override
   List<Object> get props => [];
 }
+
+// class UserDetails extends AuthState {
+//   final UserModel userdata;
+//   const UserDetails({required this.userdata});
+// }
