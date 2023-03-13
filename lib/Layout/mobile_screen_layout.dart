@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plot/screens/add_post_screen.dart';
 import 'package:plot/screens/category_screen.dart';
 import 'package:plot/screens/chat_screen.dart';
 import 'package:plot/screens/home_screen.dart';
@@ -62,6 +63,7 @@ class _MobileLayoutState extends State<MobileLayout> {
           children: const [
             HomeScreen(),
             ChatScreen(),
+            AddPostScreen(),
             CategoryScreen(),
             MenuScreen(),
           ],
@@ -90,6 +92,12 @@ class _MobileLayoutState extends State<MobileLayout> {
           ),
           BottomNavigationBarItem(
             icon: _page == 2
+                ? const Icon(Icons.add_circle_rounded)
+                : const Icon(Icons.add_circle_outline),
+            label: 'Create Post',
+          ),
+          BottomNavigationBarItem(
+            icon: _page == 3
                 ? const Icon(Icons.layers_rounded)
                 : const Icon(Icons.layers_outlined),
             label: 'Home',

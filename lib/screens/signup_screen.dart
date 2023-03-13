@@ -123,6 +123,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       customTextForm(
                         controller: _usernameController,
                         label: 'Name',
+                        keybordType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         validate: (value) {
                           if (value.isEmpty) {
                             return 'Please enter name';
@@ -134,6 +136,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       customTextForm(
                         controller: _emailController,
                         label: 'Email',
+                        keybordType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         validate: (value) {
                           if (value.isEmpty ||
                               !RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
@@ -147,6 +151,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       customTextForm(
                         controller: _passwordController,
                         label: 'Password',
+                        keybordType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
                         validate: (value) {
                           if (value.isEmpty) {
                             return "Please Enter New Password";
@@ -161,6 +167,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       customTextForm(
                         controller: _confirmPasswordController,
                         label: 'Confirm Password',
+                        keybordType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
                         validate: (value) {
                           if (value.isEmpty) {
                             return "Please Re-Enter New Password";

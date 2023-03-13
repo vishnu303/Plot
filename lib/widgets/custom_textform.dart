@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget customTextForm({controller, label, validate}) {
+Widget customTextForm(
+    {controller, label, validate, keybordType, textInputAction}) {
   return TextFormField(
       controller: controller,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: keybordType,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red),
