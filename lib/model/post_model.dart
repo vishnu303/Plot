@@ -1,12 +1,14 @@
 class Post {
   final String uid;
   final String username;
+  final String userAvatarUrl;
   final String title;
   final String postId;
   final String thumbnailUrl;
+  final String itemCategory;
   final List? imageUrls;
   final DateTime datePublished;
-  final String price;
+  final int price;
   final String description;
   final String location;
   final String phoneNo;
@@ -14,10 +16,12 @@ class Post {
   Post({
     required this.uid,
     required this.username,
+    required this.userAvatarUrl,
+    required this.itemCategory,
     required this.title,
     required this.postId,
     required this.thumbnailUrl,
-    this.imageUrls,
+    required this.imageUrls,
     required this.datePublished,
     required this.price,
     required this.description,
@@ -29,8 +33,10 @@ class Post {
     return <String, dynamic>{
       'uid': uid,
       'username': username,
+      'userAvatarUrl': userAvatarUrl,
       'title': title,
       'postId': postId,
+      'itemCategory': itemCategory,
       'thumbnailUrl': thumbnailUrl,
       'imageUrls': imageUrls,
       'datePublished': datePublished,
@@ -43,8 +49,10 @@ class Post {
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
+      itemCategory: map['itemCategory'],
       uid: map['uid'],
       username: map['username'],
+      userAvatarUrl: map['userAvatarUrl'],
       title: map['title'],
       postId: map['postId'],
       thumbnailUrl: map['thumbnailUrl'],

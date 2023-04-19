@@ -30,7 +30,7 @@ class AuthRepository {
           username: username,
           email: email,
           uid: cred.user!.uid,
-          phtoUrl: photoUrl,
+          photoUrl: photoUrl,
         );
 
         //uploading to firestore database

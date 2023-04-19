@@ -28,6 +28,7 @@ class StorageRepo {
 
       TaskSnapshot snapshot = await uploadTask;
       String downloadUrl = await snapshot.ref.getDownloadURL();
+      //debugPrint(downloadUrl);
       return downloadUrl;
     } on FirebaseException catch (e) {
       debugPrint(e.toString());

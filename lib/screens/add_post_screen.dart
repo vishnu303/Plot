@@ -1,11 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:plot/bloc/cubit/category_items_cubit.dart';
+
+import 'package:plot/bloc/post_bloc/post_bloc.dart';
+import 'package:plot/model/user_model.dart';
 import 'package:plot/widgets/custom_textform.dart';
+import 'package:plot/widgets/drop_down_category.dart';
 
 class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+  const AddPostScreen({
+    super.key,
+  });
 
   @override
   State<AddPostScreen> createState() => _AddPostScreenState();
@@ -13,6 +24,9 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
@@ -22,7 +36,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   final ImagePicker _imagePicker = ImagePicker();
   List<File> imageFileList = [];
+  UserModel? _userData;
 
+  //select images
   void selectImage() async {
     final List<XFile> selectedImages = await _imagePicker.pickMultiImage();
     debugPrint(' images ${selectedImages.length}');
@@ -35,6 +51,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
       }).toList();
       setState(() {});
     }
+  }
+
+//get username from firebase firestore
+  Future<void> getUsername() async {
+    DocumentSnapshot documentSnapshot =
+        await _firestore.collection('users').doc(_auth.currentUser!.uid).get();
+
+    setState(() {
+      _userData = UserModel.fromMap(documentSnapshot);
+    });
   }
 
   @override
@@ -58,6 +84,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
+                const DropDownCategory(),
+                const SizedBox(height: 20),
                 customTextForm(
                   controller: _titleController,
                   label: 'Title',
@@ -108,9 +136,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () {
-                    selectImage();
-                  },
+                  onTap: () => selectImage(),
                   borderRadius: const BorderRadius.all(Radius.circular(18)),
                   child: Container(
                     width: width,
@@ -158,15 +184,35 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                    onPressed: () {},
-                    child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 60),
-                        child: Text(
-                          'Save',
-                          style: TextStyle(fontSize: 18),
-                        )))
+                BlocBuilder<CategoryItemsCubit, String>(
+                  builder: (context, categoryItem) {
+                    return ElevatedButton(
+                        onPressed: () async {
+                          await getUsername();
+                          debugPrint(categoryItem);
+                          context.read<PostBloc>().add(
+                                UploadPostRequest(
+                                  username: _userData!.username,
+                                  userAvatarUrl: _userData!.photoUrl,
+                                  title: _titleController.text,
+                                  description: _descriptionController.text,
+                                  location: _locationController.text,
+                                  phoneNo: _phoneNoController.text,
+                                  price: int.parse(_priceController.text),
+                                  images: imageFileList,
+                                  itemCategory: categoryItem,
+                                ),
+                              );
+                        },
+                        child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 60),
+                            child: Text(
+                              'Save',
+                              style: TextStyle(fontSize: 18),
+                            )));
+                  },
+                )
               ],
             ),
           ),

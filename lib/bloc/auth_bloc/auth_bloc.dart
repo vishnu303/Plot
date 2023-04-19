@@ -42,6 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         UserModel data = await authRepository.getUserdata();
         emit(Authenticated(userdata: data));
       } catch (e) {
+        emit(AuthenticationError(e.toString()));
         throw (e.toString());
       }
     });

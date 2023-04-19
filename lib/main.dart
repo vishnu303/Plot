@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/Layout/responsive_layout.dart';
 
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
+import 'package:plot/bloc/cubit/category_items_cubit.dart';
+import 'package:plot/bloc/post_bloc/post_bloc.dart';
 import 'package:plot/firebase_repo/auth_repo.dart';
 import 'package:plot/screens/signin_screen.dart';
 
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
               authRepository: RepositoryProvider.of<AuthRepository>(context),
             ),
           ),
+          BlocProvider<PostBloc>(create: (context) => PostBloc()),
+          BlocProvider<CategoryItemsCubit>(
+              create: (context) => CategoryItemsCubit())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
+            stream: FirebaseAuth.instance.userChanges(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {

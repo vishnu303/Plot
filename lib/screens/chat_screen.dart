@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
@@ -18,17 +19,28 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is Authenticated) {
-          return Center(
-            child: Text(state.userdata!.uid),
-          );
-        }
-        return Center(
-          child: Text('error'),
-        );
-      },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is Authenticated) {
+              return Center(
+                child: Text(state.userdata!.uid),
+              );
+            }
+            return Center(
+              child: Text('error'),
+            );
+          },
+        ),
+        TextButton(
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+          },
+          child: const Text('Logout'),
+        ),
+      ],
     );
   }
 }

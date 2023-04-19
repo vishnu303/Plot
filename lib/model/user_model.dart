@@ -4,26 +4,25 @@ class UserModel {
   final String username;
   final String email;
   final String uid;
-  final String phtoUrl;
+  final String photoUrl;
   UserModel({
     required this.username,
     required this.email,
     required this.uid,
-    required this.phtoUrl,
+    required this.photoUrl,
   });
 
   UserModel copyWith({
     String? username,
     String? email,
     String? uid,
-    String? password,
-    String? phtoUrl,
+    String? photoUrl,
   }) {
     return UserModel(
       username: username ?? this.username,
       email: email ?? this.email,
       uid: uid ?? this.uid,
-      phtoUrl: phtoUrl ?? this.phtoUrl,
+      photoUrl: photoUrl ?? this.photoUrl,
     );
   }
 
@@ -32,7 +31,7 @@ class UserModel {
       'username': username,
       'email': email,
       'uid': uid,
-      'phtoUrl': phtoUrl,
+      'photoUrl': photoUrl,
     };
   }
 
@@ -43,7 +42,7 @@ class UserModel {
       username: map['username'] as String,
       email: map['email'] as String,
       uid: map['uid'] as String,
-      phtoUrl: map['phtoUrl'] as String,
+      photoUrl: map['photoUrl'] as String,
     );
   }
 }
