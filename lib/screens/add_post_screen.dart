@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:plot/bloc/cubit/category_items_cubit.dart';
+import 'package:plot/bloc/category_cubit/category_items_cubit.dart';
 
 import 'package:plot/bloc/post_bloc/post_bloc.dart';
 import 'package:plot/model/user_model.dart';
@@ -190,6 +190,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         onPressed: () async {
                           await getUsername();
                           debugPrint(categoryItem);
+                          if (!mounted) return;
                           context.read<PostBloc>().add(
                                 UploadPostRequest(
                                   username: _userData!.username,
