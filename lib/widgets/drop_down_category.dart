@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/bloc/category_cubit/category_items_cubit.dart';
-import 'package:plot/screens/add_post_screen.dart';
 
 class DropDownCategory extends StatefulWidget {
   const DropDownCategory({super.key});
@@ -23,7 +22,7 @@ class _DropDownCategoryState extends State<DropDownCategory> {
     return SizedBox(
       height: 40,
       child: DropdownButton<String>(
-          hint: const Text('select category of item'),
+          hint: const Text('select the item you want to sell'),
           isDense: true,
           isExpanded: true,
           value: dropDownValue,

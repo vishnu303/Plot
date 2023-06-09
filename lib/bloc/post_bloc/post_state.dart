@@ -18,3 +18,22 @@ class PostUploadError extends PostState {
 
   const PostUploadError({required this.error});
 }
+
+class PostLoaded extends PostState {
+  final List<Post> post;
+  const PostLoaded({required this.post});
+
+  @override
+  List<Object> get props => [post];
+}
+
+class PostLoading extends PostState {}
+
+class PostError extends PostState {
+  final String error;
+
+  const PostError({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

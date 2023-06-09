@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:plot/firebase_repo/storage_repo.dart';
 
 import '../model/user_model.dart';
@@ -68,12 +68,6 @@ class AuthRepository {
 
       data = UserModel.fromMap(documentSnapshot);
       return data;
-    } on FirebaseAuthException catch (e) {
-      if (kDebugMode) {
-        print(e.message.toString());
-      }
-      debugPrint('no data');
-      return data!;
     } catch (e) {
       throw Exception(e.toString());
     }

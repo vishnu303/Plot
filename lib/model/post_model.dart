@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Post {
   final String uid;
   final String username;
@@ -47,7 +49,8 @@ class Post {
     };
   }
 
-  factory Post.fromMap(Map<String, dynamic> map) {
+  factory Post.fromMap(DocumentSnapshot snap) {
+    var map = snap.data() as Map<String, dynamic>;
     return Post(
       itemCategory: map['itemCategory'],
       uid: map['uid'],
@@ -57,7 +60,7 @@ class Post {
       postId: map['postId'],
       thumbnailUrl: map['thumbnailUrl'],
       imageUrls: map['imageUrls'],
-      datePublished: map['datePublished'],
+      datePublished: map['datePublished'].toDate(),
       price: map['price'],
       description: map['description'],
       location: map['location'],

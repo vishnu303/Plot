@@ -42,3 +42,5 @@ class UploadPostRequest extends PostEvent {
         images,
       ];
 }
+
+class GetPosts extends PostEvent {}

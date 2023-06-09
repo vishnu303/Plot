@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
+import 'package:plot/firebase_repo/post_repo.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -29,14 +29,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Text(state.userdata!.uid),
               );
             }
-            return Center(
+            return const Center(
               child: Text('error'),
             );
           },
         ),
         TextButton(
           onPressed: () {
-            FirebaseAuth.instance.signOut();
+            // FirebaseAuth.instance.signOut();
+            PostRepository().getPosts();
           },
           child: const Text('Logout'),
         ),

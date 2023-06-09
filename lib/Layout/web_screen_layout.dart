@@ -11,7 +11,11 @@ class _WebLayoutState extends State<WebLayout> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text('web')),
+      body: Center(
+        child: Center(
+          child: Text('Coming Soon'),
+        ),
+      ),
     );
   }
 }
