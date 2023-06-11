@@ -19,13 +19,12 @@ class CustomAppbar extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Container(
-          // alignment: Alignment.center,
           color: Colors.white,
           height: 50,
           child: const TextField(
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              hintText: 'Search',
+              hintText: 'Search...',
               suffixIcon: Icon(Icons.search),
               enabledBorder: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(),

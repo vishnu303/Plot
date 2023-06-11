@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Plot',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primaryColor: const Color(0xff086788),
           ),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.userChanges(),

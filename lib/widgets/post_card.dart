@@ -7,6 +7,7 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //ads card
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Card(
@@ -20,6 +21,11 @@ class PostCard extends StatelessWidget {
               footer: Container(
                 color: Colors.white,
                 child: ListTile(
+                  shape: const BeveledRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(18),
+                    bottomRight: Radius.circular(18),
+                  )),
                   tileColor: Colors.white,
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(post.userAvatarUrl),

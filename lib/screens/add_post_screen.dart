@@ -45,9 +45,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
     if (selectedImages.isNotEmpty) {
       imageFileList = selectedImages.map((element) {
-        // File image =
         return File(element.path);
-        // imageFileList.add(image);
       }).toList();
       setState(() {});
     }
@@ -187,6 +185,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 BlocBuilder<CategoryItemsCubit, String>(
                   builder: (context, categoryItem) {
                     return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
                         onPressed: () async {
                           await getUsername();
                           debugPrint(categoryItem);
