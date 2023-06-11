@@ -71,4 +71,24 @@ class PostRepository {
       throw Exception(e.toString());
     }
   }
+
+  Future<List<Post>> getCategoryItem({required String categoryQuery}) async {
+    try {
+      QuerySnapshot posts = await _firestore
+          .collection('posts')
+          .where('itemCategory', isEqualTo: categoryQuery)
+          .get();
+      List<Post> data = posts.docs.map((DocumentSnapshot snap) {
+        return Post.fromMap(snap);
+      }).toList();
+
+      return data;
+    } on FirebaseException catch (e) {
+      print(e.code);
+      throw Exception(e.message);
+    } catch (e) {
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
 }

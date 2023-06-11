@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plot/bloc/category_cubit/category_items_cubit.dart';
+import 'package:plot/bloc/category_dopdown_cubit/category_items_cubit.dart';
 
 class DropDownCategory extends StatefulWidget {
   const DropDownCategory({super.key});
@@ -11,11 +11,11 @@ class DropDownCategory extends StatefulWidget {
 
 class _DropDownCategoryState extends State<DropDownCategory> {
   String? dropDownValue;
-  List items = [
-    'For Sale: Houses & Appartments',
-    'For Rent: Houses & Appartments',
+  List<String> items = [
+    'For Sale: Houses & Apartments',
+    'For Rent: Houses & Apartments',
     'Lands & Plots',
-    'For Rent:shops & Offices'
+    'For Rent: Shops & Offices'
   ];
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plot/screens/add_post_screen.dart';
-import 'package:plot/screens/category_screen.dart';
+import 'package:plot/screens/category_list_screen.dart';
 import 'package:plot/screens/chat_screen.dart';
 import 'package:plot/screens/home_screen.dart';
 import 'package:plot/screens/menu_screen.dart';
@@ -44,11 +44,11 @@ class _MobileLayoutState extends State<MobileLayout> {
         child: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
+          children: [
             HomeScreen(),
             ChatScreen(),
             AddPostScreen(),
-            CategoryScreen(),
+            CategoryListScreen(),
             MenuScreen(),
           ],
         ),
