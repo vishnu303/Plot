@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:plot/firebase_repo/storage_repo.dart';
 import 'package:uuid/uuid.dart';
 
@@ -67,7 +68,9 @@ class PostRepository {
       print(e.code);
       throw Exception(e.message);
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       throw Exception(e.toString());
     }
   }

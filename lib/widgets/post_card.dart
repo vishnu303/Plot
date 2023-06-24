@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plot/model/post_model.dart';
+import 'package:plot/screens/post_details_screen.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -17,36 +18,44 @@ class PostCard extends StatelessWidget {
         color: Colors.blue,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
-          child: GridTile(
-              footer: Container(
-                color: Colors.white,
-                child: ListTile(
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(18),
-                    bottomRight: Radius.circular(18),
-                  )),
-                  tileColor: Colors.white,
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(post.userAvatarUrl),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PostDetailsScreen(
+                        post: post,
+                      )));
+            },
+            child: GridTile(
+                footer: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18),
+                      bottomRight: Radius.circular(18),
+                    )),
+                    tileColor: Colors.white,
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(post.userAvatarUrl),
+                    ),
+                    title: Text(
+                      "\$ ${post.price}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    subtitle: Text(
+                      post.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    trailing: const Icon(Icons.favorite_border_outlined),
                   ),
-                  title: Text(
-                    "\$ ${post.price}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  subtitle: Text(
-                    post.title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  trailing: const Icon(Icons.favorite_border_outlined),
                 ),
-              ),
-              child: Image.network(
-                post.thumbnailUrl,
-                fit: BoxFit.cover,
-              )),
+                child: Image.network(
+                  post.thumbnailUrl,
+                  fit: BoxFit.cover,
+                )),
+          ),
         ),
       ),
     );
