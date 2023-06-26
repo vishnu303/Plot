@@ -27,7 +27,7 @@ class AuthenticationError extends AuthState {
   const AuthenticationError(this.error);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [error];
 }
 
 // class UserDetails extends AuthState {

@@ -39,8 +39,9 @@ class AuthRepository {
             .doc(cred.user!.uid)
             .set(userData.toMap());
       }
-    } catch (e) {
-      throw e.toString();
+    } on FirebaseAuthException catch (e) {
+      print('from repo !!!!!!!!!!!1 ${e.code}');
+      rethrow;
     }
   }
 
@@ -54,8 +55,8 @@ class AuthRepository {
         email: email,
         password: password,
       );
-    } catch (e) {
-      throw e.toString();
+    } on FirebaseAuthException catch (_) {
+      rethrow;
     }
   }
 
@@ -69,7 +70,7 @@ class AuthRepository {
       data = UserModel.fromMap(documentSnapshot);
       return data;
     } catch (e) {
-      throw Exception(e.toString());
+      throw e.toString();
     }
   }
 }

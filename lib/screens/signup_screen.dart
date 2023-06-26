@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,179 +62,195 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            width: screenWidth,
-            height: screenHeight,
-            padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 400 : 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Spacer(flex: 2),
-                const Center(
-                  child: Text(
-                    'Plot',
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthenticationError) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                content: Text(state.error)));
+          }
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              width: screenWidth,
+              height: screenHeight,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kIsWeb ? 400 : 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Spacer(flex: 2),
+                  const Center(
+                    child: Text(
+                      'Plot',
+                      style: TextStyle(
+                          color: Color(0xff086788),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.05),
+                  const Text(
+                    'Create your Account ',
                     style: TextStyle(
-                        color: Color(0xff086788),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.05),
-                const Text(
-                  'Create your Account ',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      selectImage();
-                    },
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: _image == null
-                              ? const NetworkImage(
-                                  'https://images.pexels.com/photos/10528612/pexels-photo-10528612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')
-                              : Image.file(_image!).image,
-                        ),
-                        const Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Icon(
-                            Icons.add_circle_outlined,
+                  SizedBox(height: screenHeight * 0.03),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        selectImage();
+                      },
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: _image == null
+                                ? const NetworkImage(
+                                    'https://images.pexels.com/photos/10528612/pexels-photo-10528612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')
+                                : Image.file(_image!).image,
                           ),
+                          const Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: Icon(
+                              Icons.add_circle_outlined,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.03),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        customTextForm(
+                          controller: _usernameController,
+                          label: 'Name',
+                          keybordType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter name';
+                            }
+                            return null;
+                          },
                         ),
+                        SizedBox(height: screenHeight * 0.03),
+                        customTextForm(
+                          controller: _emailController,
+                          label: 'Email',
+                          keybordType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          validate: (value) {
+                            if (value.isEmpty ||
+                                !RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
+                                    .hasMatch(value!)) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: screenHeight * 0.03),
+                        customTextForm(
+                          controller: _passwordController,
+                          label: 'Password',
+                          keybordType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return "Please Enter New Password";
+                            } else if (value.length < 8) {
+                              return "Password must be atleast 8 characters long";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SizedBox(height: screenHeight * 0.03),
+                        customTextForm(
+                          controller: _confirmPasswordController,
+                          label: 'Confirm Password',
+                          keybordType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return "Please Re-Enter New Password";
+                            } else if (value.length < 8) {
+                              return "Password must be atleast 8 characters long";
+                            } else if (value != _passwordController.text) {
+                              return "Password must be same as above";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SizedBox(height: screenHeight * 0.05),
                       ],
                     ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      customTextForm(
-                        controller: _usernameController,
-                        label: 'Name',
-                        keybordType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        validate: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter name';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: screenHeight * 0.03),
-                      customTextForm(
-                        controller: _emailController,
-                        label: 'Email',
-                        keybordType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        validate: (value) {
-                          if (value.isEmpty ||
-                              !RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
-                                  .hasMatch(value!)) {
-                            return 'Please enter a valid email';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: screenHeight * 0.03),
-                      customTextForm(
-                        controller: _passwordController,
-                        label: 'Password',
-                        keybordType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.next,
-                        validate: (value) {
-                          if (value.isEmpty) {
-                            return "Please Enter New Password";
-                          } else if (value.length < 8) {
-                            return "Password must be atleast 8 characters long";
+                  Center(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.grey,
+                            elevation: 7,
+                            backgroundColor: const Color(0xff086788)),
+                        onPressed: () {
+                          if (_image != null) {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(SignUpRequest(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                  username: _usernameController.text,
+                                  image: _image!));
+                            }
                           } else {
-                            return null;
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                content: const Text('Select profile photo')));
                           }
                         },
-                      ),
-                      SizedBox(height: screenHeight * 0.03),
-                      customTextForm(
-                        controller: _confirmPasswordController,
-                        label: 'Confirm Password',
-                        keybordType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.next,
-                        validate: (value) {
-                          if (value.isEmpty) {
-                            return "Please Re-Enter New Password";
-                          } else if (value.length < 8) {
-                            return "Password must be atleast 8 characters long";
-                          } else if (value != _passwordController.text) {
-                            return "Password must be same as above";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: screenHeight * 0.05),
-                    ],
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: kIsWeb
+                                  ? screenWidth * 0.05
+                                  : screenWidth * 0.25,
+                              vertical: 13),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        )),
                   ),
-                ),
-                Center(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.grey,
-                          elevation: 7,
-                          backgroundColor: const Color(0xff086788)),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(SignUpRequest(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              username: _usernameController.text,
-                              image: _image!));
-                        }
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: kIsWeb
-                                ? screenWidth * 0.05
-                                : screenWidth * 0.25,
-                            vertical: 13),
-                        child: const Text(
-                          'Sign Up',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )),
-                ),
-                const Spacer(flex: 2),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Do you have an account ? "),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        },
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                  const Spacer(flex: 2),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Do you have an account ? "),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          },
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
