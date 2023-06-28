@@ -33,8 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is PostLoaded) {
                 return PostGrid(post: state.post);
               } else if (state is PostLoading) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
+                return Center(
+                  child: LinearProgressIndicator(
+                    color: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
                 );
               } else {
                 return Container(

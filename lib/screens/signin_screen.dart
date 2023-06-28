@@ -17,13 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  // @override
-  // void initState() {
-  //   _emailController = TextEditingController();
-  //   _passwordController = TextEditingController();
-  //   super.initState();
-  // }
-
   @override
   void dispose() {
     _emailController.dispose();

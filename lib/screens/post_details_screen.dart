@@ -89,7 +89,8 @@ class PostDetailsScreen extends StatelessWidget {
                       backgroundImage: NetworkImage(post.userAvatarUrl)),
                   title: Text(
                     post.username,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -125,7 +126,7 @@ class PostDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 80,
         child: Padding(
           padding: const EdgeInsets.all(15),
@@ -273,9 +274,15 @@ class TopCarousal extends StatelessWidget {
               return Container(
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: const BoxDecoration(color: Colors.amber),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary),
                   child: CachedNetworkImage(
-                      fit: BoxFit.cover, imageUrl: post.imageUrls![index]));
+                    fit: BoxFit.cover,
+                    imageUrl: post.imageUrls![index],
+                    placeholder: (context, url) => Container(
+                      color: const Color(0xffD3D3D3),
+                    ),
+                  ));
             },
             itemCount: post.imageUrls!.length,
           ),

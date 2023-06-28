@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
           title: 'Plot',
           theme: ThemeData(
             primaryColor: const Color(0xff086788),
+            colorScheme: ColorScheme.fromSwatch()
+                .copyWith(secondary: const Color(0xffD3D3D3)),
           ),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.userChanges(),

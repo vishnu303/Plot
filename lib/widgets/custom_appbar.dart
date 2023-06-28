@@ -7,9 +7,21 @@ class CustomAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Colors.white,
-      title: const Text(
-        'Explore',
-        style: TextStyle(fontSize: 30, color: Colors.black),
+      title: Row(
+        children: [
+          const Text(
+            'Explore',
+            style: TextStyle(fontSize: 30, color: Colors.black),
+          ),
+          const Spacer(),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.black,
+                size: 25,
+              ))
+        ],
       ),
       snap: false,
       pinned: true,

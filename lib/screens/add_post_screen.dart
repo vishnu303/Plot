@@ -88,6 +88,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   controller: _titleController,
                   label: 'Title',
                   textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if (value.isEmpty) {
+                      return 'Please fill title';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -110,13 +116,25 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     labelText: 'Description',
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please fill description';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 customTextForm(
                   controller: _phoneNoController,
                   keybordType: TextInputType.phone,
-                  label: 'Phone No',
+                  label: 'Phone Number',
                   textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if (value.isEmpty) {
+                      return 'Please fill phone number ';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 customTextForm(
@@ -124,6 +142,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   keybordType: TextInputType.number,
                   label: 'Price',
                   textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter the amount you expecting';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 customTextForm(
@@ -131,6 +155,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   keybordType: TextInputType.text,
                   label: 'Location',
                   textInputAction: TextInputAction.done,
+                  validate: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter location';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 InkWell(
@@ -147,7 +177,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     child: imageFileList.isEmpty
                         ? const Center(
                             child: Text(
-                            'Select photos',
+                            'Upload Photos',
                             style: TextStyle(fontSize: 20),
                           ))
                         : ClipRRect(
@@ -192,19 +222,40 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           await getUsername();
                           debugPrint(categoryItem);
                           if (!mounted) return;
-                          context.read<PostBloc>().add(
-                                UploadPostRequest(
-                                  username: _userData!.username,
-                                  userAvatarUrl: _userData!.photoUrl,
-                                  title: _titleController.text,
-                                  description: _descriptionController.text,
-                                  location: _locationController.text,
-                                  phoneNo: _phoneNoController.text,
-                                  price: int.parse(_priceController.text),
-                                  images: imageFileList,
-                                  itemCategory: categoryItem,
-                                ),
-                              );
+                          if (_formKey.currentState!.validate()) {
+                            if (imageFileList.isNotEmpty) {
+                              if (categoryItem.isNotEmpty) {
+                                context.read<PostBloc>().add(
+                                      UploadPostRequest(
+                                        username: _userData!.username,
+                                        userAvatarUrl: _userData!.photoUrl,
+                                        title: _titleController.text,
+                                        description:
+                                            _descriptionController.text,
+                                        location: _locationController.text,
+                                        phoneNo: _phoneNoController.text,
+                                        price: int.parse(_priceController.text),
+                                        images: imageFileList,
+                                        itemCategory: categoryItem,
+                                      ),
+                                    );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
+                                        content: const Text(
+                                            'Select the item you want to sell')));
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      content: const Text(
+                                          'Select images you want to upload')));
+                            }
+                          }
                         },
                         child: const Padding(
                             padding: EdgeInsets.symmetric(

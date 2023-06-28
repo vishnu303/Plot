@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,13 +25,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   File? _image;
 
-  // @override
-  // void initState() {
-  //   _emailController = TextEditingController();
-  //   _passwordController = TextEditingController();
-  //   super.initState();
-  // }
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -48,12 +40,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _image = File(image!.path);
     });
-
-    // if (!mounted) return;
-    // context.read<StorageBloc>().add(PickImage(
-    //     childName: 'ProfilePic',
-    //     file: await image!.readAsBytes(),
-    //     isPost: false));
   }
 
   @override

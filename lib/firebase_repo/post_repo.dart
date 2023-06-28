@@ -65,16 +65,15 @@ class PostRepository {
 
       return data;
     } on FirebaseException catch (e) {
-      print(e.code);
+      debugPrint(e.code);
       throw Exception(e.message);
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+      debugPrint(e.toString());
       throw Exception(e.toString());
     }
   }
 
+//get category from firebase
   Future<List<Post>> getCategoryItem({required String categoryQuery}) async {
     try {
       QuerySnapshot posts = await _firestore
@@ -87,10 +86,10 @@ class PostRepository {
 
       return data;
     } on FirebaseException catch (e) {
-      print(e.code);
+      debugPrint(e.code);
       throw Exception(e.message);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       throw Exception(e.toString());
     }
   }

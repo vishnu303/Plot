@@ -75,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } on FirebaseAuthException catch (e) {
         String error = '';
         emit(const UnAuthenticated());
-        print(e.code);
+        debugPrint(e.code);
 
         switch (e.code) {
           case "ERROR_EMAIL_ALREADY_IN_USE":
