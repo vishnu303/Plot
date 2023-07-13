@@ -37,7 +37,10 @@ class CustomAppbar extends StatelessWidget {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: 'Search...',
-              suffixIcon: Icon(Icons.search),
+              suffixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
               enabledBorder: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(),
               border: OutlineInputBorder(),

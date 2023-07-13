@@ -19,7 +19,7 @@ class CategoryListScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Property Classifications',
           style: TextStyle(color: Colors.black),
         ),

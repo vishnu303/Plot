@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plot/screens/error_screen.dart';
 
 import 'package:plot/widgets/custom_appbar.dart';
 
@@ -31,7 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocBuilder<PostBloc, PostState>(
             builder: (context, state) {
               if (state is PostLoaded) {
-                return PostGrid(post: state.post);
+                if (state.post.isNotEmpty) {
+                  return PostGrid(post: state.post);
+                } else {
+                  return ErrorScreen(
+                    onPressed: () {
+                      BlocProvider.of<PostBloc>(context).add(GetPosts());
+                    },
+                  );
+                }
               } else if (state is PostLoading) {
                 return Center(
                   child: LinearProgressIndicator(
@@ -40,8 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else {
-                return Container(
-                  color: Colors.yellow,
+                return ErrorScreen(
+                  onPressed: () {
+                    BlocProvider.of<PostBloc>(context).add(GetPosts());
+                  },
                 );
               }
             },

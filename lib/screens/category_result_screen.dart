@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plot/screens/error_screen.dart';
 import 'package:plot/widgets/post_grid.dart';
 
 import '../bloc/category_bloc/category_bloc.dart';
@@ -29,17 +30,25 @@ class CategoryScreen extends StatelessWidget {
             if (state.post.isNotEmpty) {
               return PostGrid(post: state.post);
             } else {
-              return const Center(
-                child: Text('No result'),
+              return ErrorScreen(
+                onPressed: () {
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(GetCategory(categoryQuery: categoryName));
+                },
               );
             }
           } else if (state is CategoryLoading) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
+            return Center(
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
             );
           } else {
-            return Container(
-              color: Colors.yellow,
+            return ErrorScreen(
+              onPressed: () {
+                BlocProvider.of<CategoryBloc>(context)
+                    .add(GetCategory(categoryQuery: categoryName));
+              },
             );
           }
         },
