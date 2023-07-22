@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   );
                 }
-              } else if (state is PostLoading) {
+              } else if (state is PostInitial) {
                 return Center(
                   child: LinearProgressIndicator(
                     color: Theme.of(context).colorScheme.secondary,
@@ -49,11 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else {
-                return ErrorScreen(
-                  onPressed: () {
-                    BlocProvider.of<PostBloc>(context).add(GetPosts());
-                  },
-                );
+                return Container();
+                // return ErrorScreen(
+                //   onPressed: () {
+                //     BlocProvider.of<PostBloc>(context).add(GetPosts());
+                //   },
+                // );
               }
             },
           )

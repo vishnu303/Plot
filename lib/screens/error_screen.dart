@@ -7,11 +7,12 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var sHeight = MediaQuery.of(context).size.height;
+    var sWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
+        height: sHeight,
+        width: sWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
