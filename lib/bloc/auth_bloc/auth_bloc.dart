@@ -124,5 +124,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticationError(e.toString()));
       }
     });
+
+    on<UpdateUserData>((event, emit) async {
+      emit(const UserUpdating());
+      try {
+        await AuthRepository().updateUserdata(event.email, event.username);
+        emit(UserUpdated());
+      } on FirebaseAuthException catch (e) {
+        String errors = '';
+
+        switch (e.code) {
+          case 'requires-recent-login':
+            errors =
+                'This operation is sensitive and requires recent authentication. Log in again before retrying this request.';
+            break;
+          default:
+            errors = 'Something went wrong. try again ';
+            break;
+        }
+        emit(UserUpdateError(error: errors));
+      }
+    });
   }
 }

@@ -74,4 +74,26 @@ class AuthRepository {
       throw e.toString();
     }
   }
+
+  Future<void> updateUserdata(String? email, String? username) async {
+    UserModel userdata = await getUserdata();
+    User currentUser = _auth.currentUser!;
+    if (_auth.currentUser!.email != email?.trim()) {
+      try {
+        await _auth.currentUser!.updateEmail(email!);
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update({'email': email});
+      } on FirebaseAuthException {
+        rethrow;
+      }
+    }
+    if (userdata.username != username?.trim()) {
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .update({'username': username});
+    }
+  }
 }

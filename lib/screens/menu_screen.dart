@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
+import 'package:plot/screens/edit_profile_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -13,8 +14,14 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   void initState() {
-    BlocProvider.of<AuthBloc>(context).add(const GetUserDetails());
+    //BlocProvider.of<AuthBloc>(context).add(const GetUserDetails());
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    context.watch<AuthBloc>().add(GetUserDetails());
+    super.didChangeDependencies();
   }
 
   @override
@@ -71,11 +78,26 @@ class _MenuScreenState extends State<MenuScreen> {
                       ],
                     ),
                     const Spacer(),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).primaryColor),
-                        onPressed: () {},
-                        child: const Text('Edit'))
+                    state is Authenticated
+                        ? ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).primaryColor),
+                            onPressed: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen(
+                                          email: state.userdata!.email,
+                                          username: state.userdata!.username,
+                                          photoUrl: state.userdata!.photoUrl,
+                                        ))),
+                            child: const Text('Edit'))
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                disabledBackgroundColor: Colors.grey,
+                                backgroundColor:
+                                    Theme.of(context).primaryColor),
+                            onPressed: () {},
+                            child: const Text('Edit'))
                   ],
                 ),
               );

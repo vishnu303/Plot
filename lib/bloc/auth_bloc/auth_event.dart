@@ -45,3 +45,12 @@ class GetUserDetails extends AuthEvent {
   @override
   List<Object> get props => [];
 }
+
+class UpdateUserData extends AuthEvent {
+  final String email;
+  final String username;
+  const UpdateUserData({required this.email, required this.username});
+
+  @override
+  List<Object> get props => [email, username];
+}

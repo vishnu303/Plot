@@ -34,3 +34,20 @@ class AuthenticationError extends AuthState {
 //   final UserModel userdata;
 //   const UserDetails({required this.userdata});
 // }
+class UserUpdated extends AuthState {
+  @override
+  List<Object> get props => [];
+}
+
+class UserUpdateError extends AuthState {
+  final String error;
+  const UserUpdateError({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
+class UserUpdating extends AuthState {
+  const UserUpdating();
+  @override
+  List<Object> get props => [];
+}

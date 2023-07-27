@@ -95,14 +95,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           CircleAvatar(
                             radius: 40,
+                            backgroundColor: Colors.white,
                             backgroundImage: _image == null
-                                ? const NetworkImage(
-                                    'https://images.pexels.com/photos/10528612/pexels-photo-10528612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')
+                                ? const AssetImage('assets/user.png')
                                 : Image.file(_image!).image,
                           ),
                           const Positioned(
                             right: 0,
-                            bottom: 0,
+                            bottom: -4,
                             child: Icon(
                               Icons.add_circle_outlined,
                             ),
