@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
 import 'package:plot/screens/edit_profile_screen.dart';
+import 'package:plot/screens/my_ads_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -107,6 +108,8 @@ class _MenuScreenState extends State<MenuScreen> {
           ListTile(
             leading: Icon(Icons.my_library_books_rounded),
             title: Text('My Ads'),
+            onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const MyAdsScreen())),
           ),
           ListTile(
             leading: Icon(Icons.favorite_rounded),

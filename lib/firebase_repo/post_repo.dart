@@ -87,7 +87,28 @@ class PostRepository {
       return data;
     } on FirebaseException catch (e) {
       debugPrint(e.code);
-      throw Exception(e.message);
+      rethrow;
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<Post>> getPostById() async {
+    try {
+      String uid = _auth.currentUser!.uid;
+      QuerySnapshot posts = await _firestore
+          .collection('posts')
+          .where('uid', isEqualTo: uid)
+          .get();
+      List<Post> data = posts.docs.map((DocumentSnapshot snap) {
+        return Post.fromMap(snap);
+      }).toList();
+
+      return data;
+    } on FirebaseException catch (e) {
+      debugPrint(e.code);
+      rethrow;
     } catch (e) {
       debugPrint(e.toString());
       throw Exception(e.toString());

@@ -44,3 +44,5 @@ class UploadPostRequest extends PostEvent {
 }
 
 class GetPosts extends PostEvent {}
+
+class GetMyPosts extends PostEvent {}

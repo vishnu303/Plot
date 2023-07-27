@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
-import 'package:plot/bloc/post_bloc/post_bloc.dart';
 
 import 'package:plot/widgets/custom_textform.dart';
 
