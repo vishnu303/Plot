@@ -116,4 +116,8 @@ class AuthRepository {
       PostRepository().deletePostById(id);
     }
   }
+
+  Future<void> logOut() async {
+    await _auth.signOut();
+  }
 }

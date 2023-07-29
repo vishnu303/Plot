@@ -9,8 +9,6 @@ import 'package:plot/bloc/category_bloc/category_bloc.dart';
 import 'package:plot/bloc/category_dopdown_cubit/category_items_cubit.dart';
 import 'package:plot/bloc/post_bloc/post_bloc.dart';
 import 'package:plot/firebase_repo/auth_repo.dart';
-import 'package:plot/screens/menu_screen.dart';
-
 import 'package:plot/screens/signin_screen.dart';
 
 import 'firebase_options.dart';

@@ -61,3 +61,5 @@ class DeleteAccount extends AuthEvent {
   @override
   List<Object> get props => [];
 }
+
+class LogOut extends AuthEvent {}

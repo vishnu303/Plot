@@ -160,7 +160,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       );
                     });
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.delete,
                 color: Colors.red,
               ),
@@ -179,7 +179,39 @@ class _MenuScreenState extends State<MenuScreen> {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text(
+                            'LogOut',
+                          ),
+                          content: const Text('Do you want to logout ?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancel',
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(context).primaryColor))),
+                            TextButton(
+                                onPressed: () {
+                                  context.read<AuthBloc>().add(LogOut());
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                )),
+                          ],
+                        );
+                      });
+                },
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: Text(

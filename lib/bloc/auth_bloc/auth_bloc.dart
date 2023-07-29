@@ -166,5 +166,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         debugPrint(e.toString());
       }
     });
+
+    //logout
+
+    on<LogOut>((event, emit) async {
+      await AuthRepository().logOut();
+    });
   }
 }
