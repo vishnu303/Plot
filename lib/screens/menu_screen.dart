@@ -14,12 +14,6 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   @override
-  void initState() {
-    //BlocProvider.of<AuthBloc>(context).add(const GetUserDetails());
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     context.watch<AuthBloc>().add(GetUserDetails());
     super.didChangeDependencies();
@@ -119,12 +113,59 @@ class _MenuScreenState extends State<MenuScreen> {
             leading: Icon(Icons.password),
             title: Text('Change Password'),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.delete,
-              color: Colors.red,
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AccountDeleted) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    content: const Text('Account deleted ')));
+              } else if (state is DeleteError) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    content: Text(state.error)));
+              }
+            },
+            child: ListTile(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text(
+                          'Delete',
+                        ),
+                        content:
+                            const Text('Do you want to delete this account ?'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel',
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor))),
+                          TextButton(
+                              onPressed: () {
+                                BlocProvider.of<AuthBloc>(context)
+                                    .add(const DeleteAccount());
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              )),
+                        ],
+                      );
+                    });
+              },
+              leading: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              title: Text('Delete Account'),
             ),
-            title: Text('Delete Account'),
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.fileContract),

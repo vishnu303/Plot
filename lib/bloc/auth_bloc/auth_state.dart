@@ -48,6 +48,19 @@ class UserUpdateError extends AuthState {
 
 class UserUpdating extends AuthState {
   const UserUpdating();
+}
+
+class AccountDeleting extends AuthState {
+  const AccountDeleting();
+}
+
+class AccountDeleted extends AuthState {
+  const AccountDeleted();
+}
+
+class DeleteError extends AuthState {
+  final String error;
+  const DeleteError({required this.error});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [error];
 }

@@ -145,5 +145,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(UserUpdateError(error: errors));
       }
     });
+    on<DeleteAccount>((event, emit) async {
+      try {
+        emit(const AccountDeleting());
+        await AuthRepository().deleteAccount();
+        emit(const AccountDeleted());
+      } on FirebaseAuthException catch (e) {
+        String errors = '';
+
+        switch (e.code) {
+          case 'requires-recent-login':
+            errors =
+                'This operation is sensitive and requires recent authentication. Log in again before retrying this request.';
+            break;
+          default:
+            errors = 'Something went wrong. try again ';
+            break;
+        }
+        emit(DeleteError(error: errors));
+        debugPrint(e.toString());
+      }
+    });
   }
 }

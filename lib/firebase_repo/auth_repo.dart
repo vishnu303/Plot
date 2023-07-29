@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:plot/firebase_repo/post_repo.dart';
 
 import 'package:plot/firebase_repo/storage_repo.dart';
+import 'package:plot/model/post_model.dart';
 
 import '../model/user_model.dart';
 
@@ -94,6 +96,24 @@ class AuthRepository {
           .collection('users')
           .doc(currentUser.uid)
           .update({'username': username});
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    var currentUser = _auth.currentUser!;
+    List<String> postId = [];
+
+    List<Post> posts = await PostRepository().getPostById();
+    for (var element in posts) {
+      postId.add(element.postId);
+    }
+
+    await currentUser.delete();
+
+    await _firestore.collection('users').doc(currentUser.uid).delete();
+
+    for (var id in postId) {
+      PostRepository().deletePostById(id);
     }
   }
 }

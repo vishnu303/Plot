@@ -114,4 +114,8 @@ class PostRepository {
       throw Exception(e.toString());
     }
   }
+
+  Future<void> deletePostById(String id) async {
+    await _firestore.collection('posts').doc(id).delete();
+  }
 }

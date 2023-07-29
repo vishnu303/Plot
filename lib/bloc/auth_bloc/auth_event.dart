@@ -54,3 +54,10 @@ class UpdateUserData extends AuthEvent {
   @override
   List<Object> get props => [email, username];
 }
+
+class DeleteAccount extends AuthEvent {
+  const DeleteAccount();
+
+  @override
+  List<Object> get props => [];
+}

@@ -28,11 +28,31 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _phoneNoController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _priceController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _locationController;
+  late TextEditingController _phoneNoController;
+
+  @override
+  void initState() {
+    _titleController = TextEditingController();
+    _priceController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _locationController = TextEditingController();
+    _phoneNoController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _priceController.dispose();
+    _descriptionController.dispose();
+    _locationController.dispose();
+    _phoneNoController.dispose();
+    super.dispose();
+  }
 
   final ImagePicker _imagePicker = ImagePicker();
   List<File> imageFileList = [];
