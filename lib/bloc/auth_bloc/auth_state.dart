@@ -64,3 +64,18 @@ class DeleteError extends AuthState {
   @override
   List<Object> get props => [error];
 }
+
+class ReAuthenticated extends AuthState {
+  const ReAuthenticated();
+}
+
+class ReAuthenticating extends AuthState {
+  const ReAuthenticating();
+}
+
+class ReAuthenticationError extends AuthState {
+  final String error;
+  const ReAuthenticationError({required this.error});
+  @override
+  List<Object> get props => [error];
+}

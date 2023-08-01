@@ -14,6 +14,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   AuthBloc({required this.authRepository}) : super(const UnAuthenticated()) {
+    //Sign up
+
     on<SignUpRequest>((event, emit) async {
       try {
         await AuthRepository().signUp(
@@ -65,6 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    //sign in
     on<SignInRequest>((event, emit) async {
       emit(const UnAuthenticated());
       try {
@@ -115,6 +118,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    // Get user data
     on<GetUserDetails>((event, emit) async {
       try {
         UserModel data = await authRepository.getUserdata();
@@ -125,6 +129,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    //update user data
     on<UpdateUserData>((event, emit) async {
       emit(const UserUpdating());
       try {
@@ -145,6 +150,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(UserUpdateError(error: errors));
       }
     });
+
+    //delete Account
     on<DeleteAccount>((event, emit) async {
       try {
         emit(const AccountDeleting());
@@ -168,9 +175,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     //logout
-
     on<LogOut>((event, emit) async {
       await AuthRepository().logOut();
+    });
+
+    //Re-Authenticate
+    on<ReAuthenticate>((event, emit) async {
+      try {
+        emit(const ReAuthenticating());
+        await AuthRepository().reAuth(event.password);
+        emit(const ReAuthenticated());
+      } on FirebaseAuthException catch (e) {
+        emit(ReAuthenticationError(error: e.code.toString()));
+      }
     });
   }
 }

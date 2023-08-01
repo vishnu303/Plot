@@ -58,7 +58,10 @@ class PostRepository {
 //get posts from firebase and convert to model
   Future<List<Post>> getPosts() async {
     try {
-      QuerySnapshot posts = await _firestore.collection('posts').get();
+      QuerySnapshot posts = await _firestore
+          .collection('posts')
+          .orderBy('datePublished', descending: true)
+          .get();
       List<Post> data = posts.docs.map((DocumentSnapshot snap) {
         return Post.fromMap(snap);
       }).toList();
@@ -94,6 +97,7 @@ class PostRepository {
     }
   }
 
+//get posts by post id
   Future<List<Post>> getPostById() async {
     try {
       String uid = _auth.currentUser!.uid;
@@ -115,6 +119,7 @@ class PostRepository {
     }
   }
 
+//delete posts
   Future<void> deletePostById(String id) async {
     await _firestore.collection('posts').doc(id).delete();
   }

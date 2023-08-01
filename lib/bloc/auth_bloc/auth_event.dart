@@ -63,3 +63,11 @@ class DeleteAccount extends AuthEvent {
 }
 
 class LogOut extends AuthEvent {}
+
+class ReAuthenticate extends AuthEvent {
+  final String password;
+  const ReAuthenticate({required this.password});
+
+  @override
+  List<Object> get props => [password];
+}

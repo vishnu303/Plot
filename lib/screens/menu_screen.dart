@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:plot/bloc/auth_bloc/auth_bloc.dart';
+import 'package:plot/screens/change_pass_screen.dart';
 import 'package:plot/screens/edit_profile_screen.dart';
 import 'package:plot/screens/my_ads_screen.dart';
 
@@ -112,6 +113,10 @@ class _MenuScreenState extends State<MenuScreen> {
           ListTile(
             leading: Icon(Icons.password),
             title: Text('Change Password'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (contex) => const ChangePassword()));
+            },
           ),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
@@ -212,7 +217,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         );
                       });
                 },
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: Text(
                     'Log Out',

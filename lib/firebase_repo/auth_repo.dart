@@ -63,6 +63,7 @@ class AuthRepository {
     }
   }
 
+// get user data
   Future<UserModel> getUserdata() async {
     User currentUser = _auth.currentUser!;
     UserModel? data;
@@ -77,6 +78,7 @@ class AuthRepository {
     }
   }
 
+//update user data
   Future<void> updateUserdata(String? email, String? username) async {
     UserModel userdata = await getUserdata();
     User currentUser = _auth.currentUser!;
@@ -99,6 +101,7 @@ class AuthRepository {
     }
   }
 
+//delete account
   Future<void> deleteAccount() async {
     var currentUser = _auth.currentUser!;
     List<String> postId = [];
@@ -117,7 +120,31 @@ class AuthRepository {
     }
   }
 
+//logout
   Future<void> logOut() async {
     await _auth.signOut();
+  }
+
+//Re-authenticate
+  Future<void> reAuth(String password) async {
+    try {
+      var currentUser = _auth.currentUser!;
+
+      AuthCredential credential = EmailAuthProvider.credential(
+          email: currentUser.email!, password: password);
+      await currentUser.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException {
+      rethrow;
+    }
+  }
+
+//change password
+  Future<void> changePassword(String newPassword) async {
+    try {
+      var currentUser = _auth.currentUser!;
+      await currentUser.updatePassword(newPassword);
+    } on FirebaseAuthException {
+      rethrow;
+    }
   }
 }
