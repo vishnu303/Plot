@@ -47,7 +47,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCgMeyspdxzvzVdJdqhaIoUl13M0tN9aCI',
+    apiKey: 'xxxxxxxxxxxxxxx',
     appId: '1:855297320127:web:a1a0cee9a7c9451735920a',
     messagingSenderId: '855297320127',
     projectId: 'plot-pixgrid',
@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCtn0DNOx8PgB-yKt6iq3CLPt751S28GiM',
+    apiKey: 'xxxxxxxxxxxxxxxxx',
     appId: '1:855297320127:android:91e0c28224a207a935920a',
     messagingSenderId: '855297320127',
     projectId: 'plot-pixgrid',
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBs5yNP3-uRC6o70dGQGslwW_zzRlM24oo',
+    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     appId: '1:855297320127:ios:2b57c0a6f43faa7c35920a',
     messagingSenderId: '855297320127',
     projectId: 'plot-pixgrid',
